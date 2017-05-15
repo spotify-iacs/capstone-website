@@ -243,9 +243,9 @@
 
                 <p>As part of our dataset, we have 30 second raw-audio samples for 15k songs. We extracted 34 acoustic features from raw-audio at each second using a
                     feature extraction library available <a href = "https://github.com/tyiannak/pyAudioAnalysis/wiki/3.-Feature-Extraction">here</a>
-                    The acoustic features include 13 Mel Frequency Cepstral Coefficients(MFCC) , 12 Chroma coefficients in addition to energy and other spectral features.
-                    These features are a characteristic of the frequency and pitch of the songs. Combining all the 34 features taken at 30 timestamps of a song make 1020
-                    dimensional predictor for a song.
+                    The acoustic features include 13 Mel Frequency Cepstral Coefficients (MFCC) , 12 Chroma coefficients in addition to energy and other spectral features.
+                    These features are a characteristic of the frequency and pitch of the songs. Combining all the 34 features taken at 30 timestamps of a song produces 1020
+                    dimensional predictors for each track.
 
                 <img src="images/energy_extracted@3x.png" style="width: 65%"/>
                 <p> Extraction of energy from track with frame rate = 1 second</p>
@@ -261,18 +261,18 @@
 
             <h3>Predicting track popularity</h3>
             <p>This section describes modelling techniques used to predict the popularity of a track given the raw-audio features.</p>
-                <p>The predictors are the mean value of the individual raw-audio features extracted at 30 timestamps and the response is the track popularity
-                (in range 0-100)  available from spotify api. Dimensionality reduction techniques like PCA did not give improvement in model performance
-                so, we decided to take the mean value of each feature.</p>
+                <p>The predictors are the mean value of the individual raw-audio features extracted at 30 timestamps, and the response is the track popularity
+                (in range 0-100)  available from the Spotify API. Dimensionality reduction techniques like PCA did not give improvement in model performance, so
+                    we decided to take the mean value of each feature.</p>
                 <ol>
-                <li><strong>Regression Model: </strong>Regression models like linear regression , GAMs(Generalized additive models) and Random Forest Regressors
+                <li><strong>Regression Model: </strong>Regression models like linear regression, GAMs (Generalized additive models) and Random Forest Regressors
                 were implemented and the best model was Random Forest Regression with R2 = 0.35. Since the regression models do not perform well, we changed the
-                problem to a classification problem by binning the response variable in 6 bins. The songs of low popularity (0-50) were put in bin 1, bin 2
+                problem to a classification problem by binning the response variable in 6 bins. Songs with low popularity (0-50) were put in bin 1, bin 2
                 contains songs of popularity 50-60 and so on.</li>
                     <li><strong>Classification Model: </strong>
                     Random Forest Classification Model turned out to be the best classifier out of different classifiers with cross-validation classification accuracy
-                    of 76%. More importantly, the class of the most popular songs has F-score=1(precision =1, recall =1) ,i.e., the most popular class has zero
-                    misclassification rate.  The dataset was skewed, with a lot more low popularity songs compared to high popularity songs. Class weights were used to tackle
+                    of 76%. More importantly, the class of the most popular songs has F-score=1(precision =1, recall =1), i.e. the most popular class has zero
+                    misclassification rate.  The dataset was skewed, with many more low popularity songs than high popularity songs. Class weights were used to tackle
                     imbalanced dataset.</li>
                 </ol>
             </div>
@@ -281,10 +281,10 @@
         <div class="section" id="song-similarity">
             <h2 class="sectiontitle">Acoustic Similarity</h2>
             <center><p class='collabbox'>The traditional approach technique of determining acoustic similarity is by hand. But this is infeasible for
-            large quantities of music. Some researchers have tried to analyize MIDI music data to find melody contour for each
-            part of music. But the type of music similarity required for playlist construction is based on the overall sound of 
-            music rather than just the melody. One of such approaches is to use the indexing based on matching features such as
-            Mel-frequency cepstral coefficients(MFCCs), Chroma coefficients and energy etc. For this project, we used the following 
+            large quantities of music. Some researchers have tried to analyize MIDI music data to find melody contours for each
+            part of a music track. But the type of music similarity required for playlist construction is based on the overall sound of
+            music rather than just the melody. One such approach is to use indexing based on matching features such as
+            Mel-frequency cepstral coefficients (MFCCs), Chroma coefficients, energy etc. For this project, we used the following
             two metrics to identify acoustically similar songs.</p></center>
             <!--<div class="slide" id="slide1">-->
                 <div class="col-md-6 column">
@@ -295,14 +295,14 @@
                     <p></p>
                      <p><strong>Obtaining the spectral signature</strong></p>
                     
-                    <p>The spectral signature attempts to capture the main statistics of the freqeuncy and chroma coefficients
+                    <p>The spectral signature attempts to capture the main statistics of the frequency and chroma coefficients
                     to characterize the main types of sounds present in a track. We achieve this by dividing each song into 
                     30 frames each of 1 second.
-                    <ol><li>For each frame, we extract 34 acoustic features which consists of 13 MFCCs,
+                    <ol><li>For each frame, we extract 34 acoustic features consisting of 13 MFCCs and
                     12 Chroma coefficents in addition to other spectral and energy features.
                     <li>Once we have these frames, we use Gaussian Mixture Models based clustering to cluster them into 4 clusters for each song. 
                     <p>It is important to note that the clustering is local to each song.
-                    The clusters are characterized by means, covariances and weights( weight is proportional to the no. of frames
+                    The clusters are characterized by means, covariances and weights (weight is proportional to the no. of frames
                     present in each cluster). The set of clusters define the signature of a song. Mathematically, 
                     $\{(&#956_{p_1}, &#931_{p_1}, w_{p_1}),.....(&#956_{p_m}, &#931_{p_m}, w_{p_m})\}$ is the signature of a song
                     where $&#956_{p_1}$ and $&#931_{p_1}$ are the mean and covariance respectively of the cluster $p_i$ and $w_i$ is the weight of that cluster.
@@ -326,14 +326,14 @@
                     We use symmetric form of KL divergence to calculate the distance between two clusters. Linear programming
                     is used to minimize the cost (defined by multiplying flow with KL divergence distance). Finally EMD is calculated
                     as weighted sum of distances between clusters where weights are flow (probability mass). The lower the EMD value,
-                    the more the similarity between songs.                    
+                    the higher the similarity between songs.
                     
                     
                     <p><strong>Optimize song search </strong></p>
-                    <p>We have a database of around 15000 songs with their spectral signature. Given a track, its computationally expensive
-                    to calculate its EMD from the entire database of songs. To optimize the search process, we use vantange points
-                    method. The database of songs is clustered into 10 clusters using Kmeans clustering and the cluster centres are
-                    chosen as vantange points. Given an input track, we find the closest vantange point and then return top 200  acoustically
+                    <p>We have a database of around 15000 songs with spectral signatures. Given a track, it is computationally expensive
+                    to calculate its EMD from the entire database of songs. To optimize the search process, we use a vantage points
+                    method. The database of songs is clustered into 10 clusters using Kmeans clustering and the cluster centers are
+                    chosen as vantage points. Given an input track, we find the closest vantage point and then return the top 200 acoustically
                     similar songs from that cluster (where acoustic similarity is calculated using EMD).
                     This reduces the computation of EMD to a subset of songs.</p>
                     
@@ -746,7 +746,7 @@
             <div class="col-md-6 column">
               <h3>Conclusions</h3>
 
-                <p>Playlists can be optimized for popularity using
+                <p>Playlists can be effectively optimized for popularity using
                   acoustic and non-acoustic features extracted from component songs. Non-acoustic features include
                   the song's popularity, its availability in world markets, and other metadata obtained from the record
                   summary. Acoustic features include prescribed signals for energy, liveliness, tempo, and key, with
@@ -756,8 +756,8 @@
                   Generating a playlist given an input song of interest was performed using simulated annealing,
                    which optimized combinations and sequences of songs across a pool of candidate tracks. Our final
                    module allows a user to specify the pool of candidate songs from a list of three options:
-                   a network of top tracks from related artists, a network of similar tracks from related
-                   artists, or a system of similar tracks that are 100% acoustically-derived from across the Spotify
+                   a network of top tracks from related artists, a network of acoustically similar tracks from related
+                   artists, or a system of similar tracks that are 100% acoustically-derived from raw audio across the Spotify
                    universe.
                </p>
               <h3>Future Work</h3>
@@ -771,13 +771,13 @@
           </div>
             <div class="col-md-6 column">
                 <h3>Challenges</h3>
-                <p> Evaluating recommendation systems is always tricky, as
-                    there is often no definite metric to measure acoustic similarity. This problem is usually approached
+                <p> Evaluating music recommendation systems quantitatively is difficult, as
+                    there is often no definitive metric for acoustic similarity. This problem is usually approached
                     in a subjective way, whereby music experts rate the similarity of songs and finally the majority
                     vote is taken to generate similarity scores between songs. Based on literature review, we found
                     that songs we deemed to be acoustically similar belonged to the same genre more that 90% of the time.
-                    To further evaluate our model for acoustic similarity, we listened to the songs ourselves and noted
-                    striking similarities in the acoustics, singing style, and genre.</p>
+                    To further qualitatively evaluate our model for acoustic similarity, we listened to the songs ourselves and noted
+                    striking similarities in the acoustics, vocal style, and genre.</p>
                 <p> Evaluating our playlist generation engine is also challenging for two primary reasons.
                     <ol>
                 <li>We have a limited dataset of ~1700 playlists, and only 25% of the songs present in those playlists
@@ -785,7 +785,7 @@
                 <li>
                     Part of our goal was to incorporate songs into successful playlists that belonged to lesser-known
                     artists, which accounts for about 25% of our data. Our loss function, however, accounted only
-                    for overall playlist popularity and didn't penalize for popular or unpopular songs within the playlist.
+                    for overall playlist popularity and didn't penalize for including popular songs within the playlist.
                 </li>
                     </ol>
                 </p>
