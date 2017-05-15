@@ -8,7 +8,7 @@ function ready(error, playlists, probabilities) {
     if (error) throw error;
     playlistTable = new Playlist(playlists);
     graph = new Graph(probabilities);
-
+    graph2 = new PopGraph(playlists, probabilities);
 }
 
 console.log('This would be the main JS file.');
@@ -117,6 +117,7 @@ $("#songselect tr").click(function(e) {
     if (selectedSong!="" & selectedBucket!=""){
         playlistTable.wrangleData(selectedSong, selectedBucket);
         graph.wrangleData(selectedSong, selectedBucket);
+        graph2.wrangleData(selectedSong, selectedBucket);
         $(".play").addClass("play-disabled");
 
 
@@ -131,6 +132,7 @@ $("#methodselect tr").click(function(e) {
     if (selectedSong!="" & selectedBucket!=""){
         playlistTable.wrangleData(selectedSong, selectedBucket);
         graph.wrangleData(selectedSong, selectedBucket);
+        graph2.wrangleData(selectedSong, selectedBucket);
         $(".play").addClass("play-disabled");
 
     }
