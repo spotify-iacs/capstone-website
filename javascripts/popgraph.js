@@ -116,11 +116,11 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
     var mean_high = formatter(d3.mean(high_pop, function(d){return d.popularity}));
 
     if (mean_high == "NaN") {
-        mean_high = 0;
+        mean_high = 0.00;
     }
 
     if (mean_low == "NaN") {
-        mean_low = 0;
+        mean_low = 0.00;
     }
 
     var means = [
