@@ -34,8 +34,8 @@ svg2.append("g")
     .call(d3.axisBottom(x));
 
 svg2.append("text")
-    .attr("transform", "translate(60,210)")
-    .text("Popularity Class");
+    .attr("transform", "translate(30,210)")
+    .text("Playlist Popularity Class");
 
 svg2.append("text")
     .attr("transform", "translate(-35,100)rotate(-90)")
