@@ -17,7 +17,7 @@ var svg3 = d3.select("#chart-area").append("svg")
 var xpop = d3.scaleBand().rangeRound([0, width_g]).padding(0.1);
 var ypop = d3.scaleLinear().range([height_g,0]);
 
-xpop.domain(["Low","High"]);
+xpop.domain(["Low (<30)","High (>=30)"]);
 ypop.domain([0,1.0]);
 
 svg3.append("g")
@@ -31,8 +31,8 @@ svg3.append("g")
     .call(d3.axisBottom(xpop));
 
 svg3.append("text")
-    .attr("transform", "translate(30,210)")
-    .text("Mean Track Popularity");
+    .attr("transform", "translate(40,210)")
+    .text("Track Popularity");
 
 svg3.append("text")
     .attr("transform", "translate(-35,150)rotate(-90)")
@@ -124,8 +124,8 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
     }
 
     var means = [
-        {name: "Low", mean: mean_low},
-        {name: "High", mean: mean_high}
+        {name: "Low (<30)", mean: mean_low},
+        {name: "High (>=30)", mean: mean_high}
     ];
 
 
