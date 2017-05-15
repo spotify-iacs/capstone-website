@@ -205,9 +205,9 @@
                       In order to generate a training set of playlist-level features, a careful consideration of track-level
                       analysis had to be made in order to aggregate song data in a meaningful way. While simple averaging or
                       addition could have been a simple solution, capturing the distribution of acoustic features more
-                      precisely should contain better predictive ability. As a result, our approach was to first
-                      approximate the distribution of acoustic features by representing each acoustic features in 5 different
-                      columns, each corresponding to the quantile of that feature's distribution across the playlist. The
+                      precisely should contain better predictive ability. As a result, our first approach was to
+                      approximate the distribution of acoustic features by representing each feature with 5 different
+                      columns, each corresponding to the quantile median of that feature's distribution across the playlist. The
                       second, and chosen, approach was to instead reflect the distribution through sequencing, by providing
                       the median value of that acoustic feature for songs that belong to a particular quartile of the
                       playlist's progression.
