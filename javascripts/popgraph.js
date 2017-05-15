@@ -102,11 +102,11 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
     });
 
     var low_pop = filteredData.filter(function(d){
-        if(d.popularity < 50){return d;}
+        if(d.popularity < 30){return d;}
     });
 
     var high_pop = filteredData.filter(function(d){
-        if(d.popularity >= 50){return d;}
+        if(d.popularity >= 30){return d;}
     });
 
 
