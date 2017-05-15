@@ -110,10 +110,10 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
     });
 
 
-    formatter = d3.format(".3n");
+    formatter = d3.format(".2n");
 
-    var mean_low = formatter(d3.mean(low_pop, function(d){return d.popularity}));
-    var mean_high = formatter(d3.mean(high_pop, function(d){return d.popularity}));
+    var mean_low = formatter(low_pop.length / filteredData.length);
+    var mean_high = formatter(high_pop.length / filteredData.length);
 
     if (mean_high == "NaN") {
         mean_high = formatter(0);
@@ -158,7 +158,7 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
         .enter().append("text")
         .attr("class","text")
         .attr("text-anchor", "right")
-        .attr("x", function(d) { return xpop(d.name) + (x.bandwidth() / 2) +13; })
+        .attr("x", function(d) { return xpop(d.name) + (x.bandwidth() / 2) +15; })
         .attr("y", function(d) { return ypop(d.mean) - 5;})
         .attr("font-family", "sans-serif")
         .attr("font-size", "11px")
