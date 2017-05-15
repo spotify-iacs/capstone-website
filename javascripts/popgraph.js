@@ -18,7 +18,7 @@ var xpop = d3.scaleBand().rangeRound([0, width_g]).padding(0.1);
 var ypop = d3.scaleLinear().range([height_g,0]);
 
 xpop.domain(["Low","High"]);
-ypop.domain([0,75]);
+ypop.domain([0,1.0]);
 
 svg3.append("g")
     .attr("transform","translate(0,0)")
