@@ -785,8 +785,9 @@ thead, tbody tr {
 
 
 .probsvg {
-  width: 280px;
+  width: 240px;
   height: 250px;
+  margin: 0 10px 0 0;
 }
 
 
