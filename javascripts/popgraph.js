@@ -31,8 +31,8 @@ svg3.append("g")
     .call(d3.axisBottom(xpop));
 
 svg3.append("text")
-    .attr("transform", "translate(60,210)")
-    .text("Track Popularity");
+    .attr("transform", "translate(30,210)")
+    .text("Mean Track Popularity");
 
 svg3.append("text")
     .attr("transform", "translate(-35,150)rotate(-90)")
