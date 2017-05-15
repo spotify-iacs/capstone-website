@@ -285,12 +285,12 @@
             part of music. But the type of music similarity required for playlist construction is based on the overall sound of 
             music rather than just the melody. One of such approaches is to use the indexing based on matching features such as
             Mel-frequency cepstral coefficients(MFCCs), Chroma coefficients and energy etc. For this project, we used the following 
-            two metrics to get acoustically similar songs.</p></center>
+            two metrics to identify acoustically similar songs.</p></center>
             <!--<div class="slide" id="slide1">-->
                 <div class="col-md-6 column">
                     
                     <h3>Earth Movers Distance</h3>
-                    The EMD calculates the minimum amount of ‘work’(probability mass) required to transform one spectral signature
+                    The EMD calculates the minimum amount of ‘work’ (probability mass) required to transform one spectral signature
                     into the other.
                     <p></p>
                      <p><strong>Obtaining the spectral signature</strong></p>
@@ -325,7 +325,7 @@
                     <p>Once we have the spectral signature of two songs, we use EMD to calculate the similarity between songs.
                     We use symmetric form of KL divergence to calculate the distance between two clusters. Linear programming
                     is used to minimize the cost (defined by multiplying flow with KL divergence distance). Finally EMD is calculated
-                    as weighted sum of distances between clusters where weights are flow(probability mass). The lower the EMD value,
+                    as weighted sum of distances between clusters where weights are flow (probability mass). The lower the EMD value,
                     the more the similarity between songs.                    
                     
                     
@@ -342,10 +342,10 @@
                     
                     </p>
                 <h3>Manhattan Distance</h3>
-                Calculating EMD between two songs a computationally expensive. In addition to that, raw-audio is required to 
-                get the spectral signature. To deal with computational complexity, we used Manhattan distance to calculate song similarity.
-                Instead of using raw-audio features, we used acoustic features provided by spotify api as a feature set for the song.
-                We used this distance metric to get a list fo acoustically similar songs  from related artists.
+                Calculating EMD between two songs is computationally expensive, and raw audio is required to
+                create the spectral signature. To reduce these challenges, we also used Manhattan distance to calculate song similarity.
+                Instead of using raw-audio features, we input audio features provided by the Spotify API as a feature set for the track.
+                Because of the high dimensionality introduced by using the complete set of Spotify API features, manhattan distance is preferable over Euclidean distance.
                 
             
                 </div>
@@ -394,9 +394,10 @@
             <div class="col-md-6 column">
                 <h3>Results</h3>
                 <p> As well as selecting one bucket of candidate songs, our implementation allows the user to select
-                    multiple buckets and <strong>input a weighting to define the proportions of each bucket</strong> included in the
-                    candidate list. We can understand the effects of using different buckets by varying the weights.
-                    For example, if we select tracks from both A) top tracks by related artists as well as B) acoustically
+                    multiple buckets and <strong>input a weighting to define the proportions between buckets</strong> included in the
+                    candidate list. We can understand the effects of using different buckets by varying the weights and measuring
+                    the resulting energy from simulated annealing. For example, if we select tracks from both A) top
+                    tracks by related artists as well as B) acoustically
                     similar tracks from related artists, we can observe that increasing the proportion of top tracks
                     will give us somewhat better results for the track Shape of You by Ed Sheeran.</p>
                 <p> However, using a higher proportion of top tracks will also prevent the final playlist from including
@@ -404,7 +405,7 @@
                     that may be unlikely to appear in top tracks from related artists.</p>
 
 
-                <center><img src="images/Asset%204@3x.png" style="width: 60%"/></center>
+                <center><img src="images/weighting_se@3x.png" style="width: 75%"/></center>
 
 
             </div>
