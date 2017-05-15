@@ -34,7 +34,7 @@ svg2.append("g")
     .call(d3.axisBottom(x));
 
 svg2.append("text")
-    .attr("transform", "translate(200,210)")
+    .attr("transform", "translate(60,210)")
     .text("Popularity Class");
 
 svg2.append("text")
