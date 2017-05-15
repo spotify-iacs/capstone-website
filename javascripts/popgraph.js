@@ -158,7 +158,7 @@ PopGraph.prototype.wrangleData = function(selectSong, selectBucket){
         .enter().append("text")
         .attr("class","text")
         .attr("text-anchor", "right")
-        .attr("x", function(d) { return xpop(d.name) + (x.bandwidth() / 2) +11; })
+        .attr("x", function(d) { return xpop(d.name) + (x.bandwidth() / 2) +13; })
         .attr("y", function(d) { return ypop(d.mean) - 5;})
         .attr("font-family", "sans-serif")
         .attr("font-size", "11px")
